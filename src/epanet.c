@@ -108,7 +108,7 @@ execute function x and set the error code equal to its return value.
 */
 
 /*** New compile directives ***/                                               //(2.00.11 - LR)
-#define CLE     /* Compile as a command line executable */
+//#define CLE     /* Compile as a command line executable */
 //#define SOL     /* Compile as a shared object library */
 //#define DLL       /* Compile as a Windows DLL */
 
@@ -3094,8 +3094,8 @@ void  writecon(char *s)
 */
 {
 #ifdef CLE                                                                     //(2.00.11 - LR)
-   fprintf(stdout,s);
-   fflush(stdout);
+   //fprintf(stdout,s);
+   //fflush(stdout);
 #endif
 }
 

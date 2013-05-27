@@ -10,6 +10,7 @@ IF(${LONG_SIZE} EQUAL 8)
 ENDIF()
 
 OPTION(CLE "Compile as a command line executable" "OFF")
+OPTION(TESTING "Testing toolkit" "OFF")
 
 IF(${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
     MESSAGE(STATUS "Using GNU compilers")
@@ -35,10 +36,23 @@ INSTALL(TARGETS epanet2 DESTINATION lib)
 
 IF(${CLE})
     ADD_DEFINITIONS(-DCLE)
+    SET(${TESTING} OFF)
+    REMOVE_DEFINITIONS(-DTESTING)
+ENDIF()
+
+IF(${TESTING})
+    ADD_DEFINITIONS(-DTESTING)
+    SET(${CLE} OFF)
+    REMOVE_DEFINITIONS(-DCLE)
+ENDIF()
+
+
+IF(${CLE} OR ${TESTING})
     ADD_EXECUTABLE(Ep2 ${CPP_FILES})
     TARGET_LINK_LIBRARIES(Ep2 ${LINKLIBS})
     INSTALL(TARGETS Ep2 DESTINATION bin)
     MESSAGE(STATUS "Building executable")
 ELSE()
     MESSAGE(STATUS "Type \"cmake -DCLE=ON [path]\" to build an Epanet executable")
+    MESSAGE(STATUS "Type \"cmake -DTESTING=ON [path]\" to build a testing main function")
 ENDIF()
